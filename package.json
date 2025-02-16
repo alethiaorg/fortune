@@ -1,6 +1,9 @@
 {
   "name": "fortune",
   "packageManager": "pnpm@9.0.6",
+  "engines": {
+    "node": "22.11.0"
+  },
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify"
