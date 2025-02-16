@@ -5,6 +5,13 @@ compatibility_flags = [ "nodejs_compat" ]
 
 assets = { directory = "public" }
 
-# wrangler.toml (wrangler v3.88.0^)
+workers_dev = true
+
+[env.staging]
+vars = { ENVIRONMENT = "staging" }
+
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
 [observability.logs]
 enabled = true
