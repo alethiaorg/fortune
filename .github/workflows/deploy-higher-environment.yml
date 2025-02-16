@@ -1,10 +1,10 @@
-name: Deploy to Cloudflare
+name: Deploy to Higher Environment to Cloudflare
 
 on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Select the deployment environment'
+        description: 'Select the deployment environment (staging, production)'
         required: true
         default: staging
         options:
