@@ -13,10 +13,15 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
+
+      - name: Get Node.js version from package.json
+        id: node_version
+        run: echo "node_version=$(jq -r '.engines.node' package.json)" >> $GITHUB_OUTPUT
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: .node-version
+          node-version: ${{ steps.node_version.outputs.node_version }}
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
 
