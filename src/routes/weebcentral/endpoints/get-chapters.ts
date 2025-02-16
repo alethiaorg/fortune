@@ -5,7 +5,7 @@ import { OpenAPIHono, z } from '@hono/zod-openapi';
 import { ChapterSchema } from '@/schemas';
 import { chapters as route } from '@/templates';
 
-import { getChapters } from '../helpers/parser';
+import { getChapters } from '../helpers/fetcher';
 
 const endpoint = new OpenAPIHono();
 

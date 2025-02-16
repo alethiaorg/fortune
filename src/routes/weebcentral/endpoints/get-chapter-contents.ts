@@ -5,7 +5,7 @@ import { OpenAPIHono, z } from '@hono/zod-openapi';
 
 import { chapterContents as route } from '@/templates';
 
-import { BASE_MANGA_URL, USER_AGENT } from '../util/constants';
+import { BASE_URL, USER_AGENT } from '../util/constants';
 
 const endpoint = new OpenAPIHono();
 
@@ -13,7 +13,9 @@ endpoint.openapi(route, async (c) => {
 	try {
 		const { slug } = c.req.param();
 
-		const { data: html } = await axios.get(`${BASE_MANGA_URL}/${slug}`, {
+		const url = `${BASE_URL}/chapters/${slug}/images?is_prev=False&current_page=1&reading_style=long_strip`;
+
+		const { data: html } = await axios.get(url, {
 			headers: {
 				'User-Agent': USER_AGENT
 			}
@@ -23,8 +25,10 @@ endpoint.openapi(route, async (c) => {
 
 		const contents: Array<string> = [];
 
-		$('.container-chapter-reader img').each((_, element) => {
+		$('section.flex-1.flex.flex-col.pb-4.cursor-pointer img').each((_, element) => {
 			const imageUrl = $(element).attr('src');
+
+			console.log(imageUrl);
 
 			if (imageUrl) {
 				contents.push(imageUrl);

@@ -5,9 +5,9 @@ import { RouteSchema } from '@/schemas';
 import { source as route } from '@/templates';
 
 // import { default as search } from './endpoints/get-search';
-// import { default as manga } from './endpoints/get-manga';
+import { default as manga } from './endpoints/get-manga';
 import { default as chapters } from './endpoints/get-chapters';
-// import { default as chapter } from './endpoints/get-chapter-contents';
+import { default as chapter } from './endpoints/get-chapter-contents';
 
 // import { default as top } from './endpoints/get-top';
 // import { default as popular } from './endpoints/get-popular';
@@ -65,9 +65,9 @@ source.openapi(route, (c) => {
 });
 
 // source.route('/search', search);
-// source.route('/manga', manga);
+source.route('/manga', manga);
 source.route('/chapters', chapters);
-// source.route('/chapter', chapter);
+source.route('/chapter', chapter);
 
 // Custom
 routes.forEach((route) => {

@@ -1,59 +1,81 @@
-import axios from 'axios';
-import { CheerioAPI, load } from 'cheerio';
+import { CheerioAPI } from 'cheerio';
 
 import { z } from '@hono/zod-openapi';
-import { ChapterSchema } from '@/schemas';
 
-import { BASE_URL, USER_AGENT } from '../util/constants';
+import { ChapterSchema, MangaSchema, OriginSchema } from '@/schemas';
+import { BASE_URL, REFERER } from '../util/constants';
 
+type Manga = z.infer<typeof MangaSchema>;
+type Origin = z.infer<typeof OriginSchema>;
 type Chapter = z.infer<typeof ChapterSchema>;
 
-export const getChapters = async (
-	slug: string,
-	prefetched?: CheerioAPI
-): Promise<Array<Chapter>> => {
-	const endpoint = `${BASE_URL}/series/${slug}/full-chapter-list`;
+export const getMangaMetadata = ($: CheerioAPI): Manga => {
+	const title = $('h1.md\\:hidden.text-2xl.font-bold.text-center').text().trim();
 
-	var $ = prefetched;
-
-	if (!$) {
-		const { data: html } = await axios.get(endpoint, { headers: { 'User-Agent': USER_AGENT } });
-		$ = load(html);
-	}
-
-	const prefix = 'Chapter ';
-	const chapters: Array<Chapter> = [];
-
-	$('div.flex.items-center').each((_, element) => {
-		const chapterTitle = $!(element).find('span[class=""]').first().text().trim();
-
-		const chapterNumber = parseInt(chapterTitle.slice(prefix.length), 10);
-
-		if (isNaN(chapterNumber)) {
-			throw new Error('Chapter number is not parsable.');
-		}
-
-		const href = $!(element).find('a').attr('href');
-		var chapterSlug = '';
-		if (href && href.includes('/chapters/')) {
-			// Get the substring after "/chapters/"
-			chapterSlug = href.split('/chapters/')[1];
-		} else {
-			throw new Error(`No valid href found for chapter with title: ${chapterTitle}`);
-		}
-
-		const dateValue = $!(element).find('time.text-datetime').attr('datetime') || '';
-
-		const chapter: Chapter = {
-			slug: `chapters/${chapterSlug}`,
-			title: chapterTitle,
-			number: chapterNumber,
-			scanlator: 'weebcentral',
-			date: new Date(dateValue)
-		};
-
-		chapters.push(chapter);
+	const authors: Array<string> = [];
+	$('li:contains("Author(s):") span a').each((_, element) => {
+		authors.push($(element).text().trim());
 	});
 
-	return chapters;
+	const synopsis = $('li:contains("Description") p').text().trim();
+
+	// No alt titles available for this source
+	const alternativeTitles: Array<string> = [];
+
+	const tags: Array<string> = [];
+	$('li:contains("Tags(s):") span a').each((_, element) => {
+		tags.push($(element).text().trim());
+	});
+
+	return {
+		title,
+		authors,
+		synopsis,
+		alternativeTitles,
+		tags
+	};
+};
+
+export const getOriginMetadata = (
+	$: CheerioAPI,
+	slug: string,
+	chapters: Array<Chapter>
+): Origin => {
+	// This source only has 1 cover
+	const cover = $('meta[property="og:image"]').attr('content') ?? '';
+
+	let status = $('li:contains("Status:") a').text().trim();
+	const availableStatusOptions = ['Ongoing', 'Completed', 'Hiatus', 'Cancelled', 'Unknown'];
+	if (!availableStatusOptions.includes(status)) {
+		status = 'Unknown';
+	}
+
+	let classification = $('li:contains("Adult Content:") a').text().trim();
+	if (classification.toLowerCase() === 'yes') {
+		classification = 'Explicit';
+	} else if (classification.toLowerCase() === 'no') {
+		classification = 'Safe';
+	} else {
+		classification = 'Unknown';
+	}
+
+	const creation =
+		chapters.length > 0
+			? chapters
+					.reduce((earliest, chapter: Chapter) => {
+						const chapterDate = new Date(chapter.date);
+						return chapterDate < earliest ? chapterDate : earliest;
+					}, new Date())
+					.toISOString()
+			: new Date(0).toISOString();
+
+	return {
+		slug,
+		url: `${BASE_URL}/series/${slug}`,
+		referer: REFERER,
+		covers: [cover],
+		status: status as 'Unknown' | 'Ongoing' | 'Completed' | 'Cancelled' | 'Hiatus',
+		classification: classification as 'Unknown' | 'Safe' | 'Explicit',
+		creation: new Date(creation)
+	};
 };
