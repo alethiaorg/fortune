@@ -20,12 +20,6 @@ export const OriginSchema = z
 			example: 'https://example.com'
 		}),
 
-		// metadata
-		rating: z.number().min(0).max(5).openapi({
-			description: 'Rating of the manga',
-			example: 4.5
-		}),
-
 		covers: z.array(z.string()).openapi({
 			description: 'Covers of the manga',
 			example: ['https://example.com/manga/manga-123456/cover.jpg']

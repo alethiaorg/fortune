@@ -71,7 +71,6 @@ export const toManga = (
 			slug: raw.id,
 			url: SOURCE_URL + raw.id,
 			referer: REFERER,
-			rating: getMangaRating(raw.id, stats.statistics),
 			covers: getMangaCovers(raw.id, covers),
 			status: PublishStatusSchema.parse(raw.attributes.status ?? 'Unknown'),
 			classification: ClassificationSchema.parse(raw.attributes.contentRating ?? 'Unknown'),

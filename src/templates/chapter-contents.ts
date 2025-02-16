@@ -4,14 +4,18 @@ const route = createRoute({
 	method: 'get',
 	path: '/{slug}',
 	request: {
-		params: z.object({ slug: z.string() }),
-		query: z.object({ quality: z.enum(['data', 'data-saver']).optional() })
+		params: z.object({
+			slug: z.string().openapi({ description: 'A URI-encoded version of the slug' })
+		}),
+		query: z.object({
+			quality: z.enum(['data', 'data-saver']).optional()
+		})
 	},
 	responses: {
 		200: {
+			description: 'Returns the chapters of the corresponding manga slug',
 			content: {
 				'application/json': {
-					// Just an array of strings
 					schema: {
 						type: 'array',
 						items: { type: 'string' },
@@ -22,8 +26,7 @@ const route = createRoute({
 						]
 					}
 				}
-			},
-			description: 'Returns the chapters of the corresponding manga slug'
+			}
 		},
 		404: {
 			description: 'Returns a 404 error when the manga in question is not found.'

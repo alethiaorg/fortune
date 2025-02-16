@@ -10,10 +10,9 @@ import { default as chapters } from './endpoints/get-chapters';
 import { default as chapter } from './endpoints/get-chapter-contents';
 
 import { default as top } from './endpoints/get-top';
-import { default as popular } from './endpoints/get-popular';
-import { default as rising } from './endpoints/get-rising';
 import { default as recent } from './endpoints/get-recent';
 import { default as recentlyAdded } from './endpoints/get-new';
+import { default as recentManhwa } from './endpoints/get-recent-manhwa';
 
 const source = new OpenAPIHono();
 
@@ -24,14 +23,9 @@ const routes: Array<APIRoute> = [
 		handler: top
 	},
 	{
-		name: 'Most Popular',
-		path: '/popular',
-		handler: popular
-	},
-	{
-		name: 'Rising',
-		path: '/rising',
-		handler: rising
+		name: 'Recent Manhwa',
+		path: '/recent-manhwa',
+		handler: recentManhwa
 	},
 	{
 		name: 'Recently Updated',

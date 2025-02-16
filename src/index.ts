@@ -5,8 +5,9 @@ import { apiReference } from '@scalar/hono-api-reference';
 import { HostSchema, SourceSchema } from './schemas';
 import { host as route } from './templates';
 
-import { default as MangaDexSource } from '@/routes/mangadex';
 import { default as ExampleSource } from '@/routes/example';
+import { default as MangaDexSource } from '@/routes/mangadex';
+import { default as ManganatoSource } from '@/routes/manganato';
 
 type Source = z.infer<typeof SourceSchema>;
 type APISource = Source & { handler: OpenAPIHono };
@@ -23,6 +24,12 @@ const sources: Array<APISource> = [
 		icon: 'mangadex.png',
 		path: '/mangadex',
 		handler: MangaDexSource
+	},
+	{
+		name: 'Manganato',
+		icon: 'manganato.png',
+		path: '/manganato',
+		handler: ManganatoSource
 	}
 ];
 

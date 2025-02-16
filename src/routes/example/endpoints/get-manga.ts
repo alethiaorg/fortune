@@ -28,7 +28,6 @@ endpoint.openapi(route, async (c) => {
 			slug: 'manga-123456',
 			url: 'https://example.com/manga/manga-123456',
 			referer: 'https://example.com',
-			rating: 2.5,
 			covers: ['https://example.com/manga/manga-123456/cover.jpg'],
 			status: 'Unknown',
 			classification: 'Unknown',
