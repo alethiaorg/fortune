@@ -8,6 +8,7 @@ import { host as route } from './templates';
 import { default as ExampleSource } from '@/routes/example';
 import { default as MangaDexSource } from '@/routes/mangadex';
 import { default as ManganatoSource } from '@/routes/manganato';
+import { default as WeebCentralSource } from '@/routes/weebcentral';
 
 type Source = z.infer<typeof SourceSchema>;
 type APISource = Source & { handler: OpenAPIHono };
@@ -30,6 +31,12 @@ const sources: Array<APISource> = [
 		icon: 'manganato.png',
 		path: '/manganato',
 		handler: ManganatoSource
+	},
+	{
+		name: 'WeebCentral',
+		icon: 'weebcentral.png',
+		path: '/weebcentral',
+		handler: WeebCentralSource
 	}
 ];
 
@@ -90,12 +97,16 @@ app.doc('/openapi', {
 			description: 'Local Environment'
 		},
 		{
-			url: new URL('http://fortune.alethia.workers.dev').origin,
-			description: 'Deployed Instance 1'
+			url: new URL('https://fortune.alethia.workers.dev').origin,
+			description: 'Default Deployed Instance'
 		},
 		{
-			url: new URL('http://fortune-2.alethia.workers.dev').origin,
-			description: 'Deployed Instance (Alternative)'
+			url: new URL('https://fortune--staging.alethia.workers.dev').origin,
+			description: 'Deployed Instance (Staging)'
+		},
+		{
+			url: new URL('https://fortune--production.alethia.workers.dev').origin,
+			description: 'Deployed Instance (Production)'
 		}
 	]
 });
