@@ -5,6 +5,7 @@ import { OpenAPIHono, z } from '@hono/zod-openapi';
 
 import { search as route } from '@/templates';
 import { EntrySchema } from '@/schemas';
+import { encodeUri } from '@/util';
 
 import { BASE_URL, USER_AGENT } from '../util/constants';
 
@@ -64,7 +65,7 @@ endpoint.openapi(route, async (c) => {
 			// Get the title by selecting the <a> element with the class "link link-hover"
 			const title = article.find('a.link.link-hover').first().text().trim();
 
-			results.push({ slug, cover, title });
+			results.push({ slug: encodeUri(slug), cover, title });
 		});
 
 		z.array(EntrySchema).parse(results);

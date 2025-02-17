@@ -3,6 +3,7 @@ import { CheerioAPI, load } from 'cheerio';
 
 import { z } from '@hono/zod-openapi';
 import { ChapterSchema } from '@/schemas';
+import { encodeUri } from '@/util';
 
 import { BASE_MANGA_URL, USER_AGENT } from '../util/constants';
 
@@ -50,7 +51,7 @@ export const getChapters = async (
 		const chapterDateText = chapterElement.find('.chapter-time').attr('title') ?? -1;
 
 		const chapter: Chapter = {
-			slug: `${slug}/chapter-${chapterNumber}`,
+			slug: encodeUri(`${slug}/chapter-${chapterNumber}`),
 			title: chapterTitle,
 			number: chapterNumber,
 			scanlator: 'manganato',

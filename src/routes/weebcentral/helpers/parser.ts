@@ -2,6 +2,7 @@ import { CheerioAPI } from 'cheerio';
 
 import { z } from '@hono/zod-openapi';
 
+import { encodeUri } from '@/util';
 import { ChapterSchema, MangaSchema, OriginSchema } from '@/schemas';
 import { BASE_URL, REFERER } from '../util/constants';
 
@@ -70,7 +71,7 @@ export const getOriginMetadata = (
 			: new Date(0).toISOString();
 
 	return {
-		slug,
+		slug: encodeUri(slug),
 		url: `${BASE_URL}/series/${slug}`,
 		referer: REFERER,
 		covers: [cover],

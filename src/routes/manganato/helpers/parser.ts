@@ -4,6 +4,7 @@ import { z } from '@hono/zod-openapi';
 
 import { ChapterSchema, MangaSchema, OriginSchema } from '@/schemas';
 import { BASE_MANGA_URL, REFERER } from '../util/constants';
+import { encodeUri } from '@/util';
 
 type Manga = z.infer<typeof MangaSchema>;
 type Origin = z.infer<typeof OriginSchema>;
@@ -79,7 +80,7 @@ export const getOriginMetadata = (
 			: new Date(0).toISOString();
 
 	return {
-		slug,
+		slug: encodeUri(slug),
 		url,
 		referer,
 		covers: [cover],

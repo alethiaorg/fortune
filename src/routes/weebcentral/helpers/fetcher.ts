@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { CheerioAPI, load } from 'cheerio';
+import { load } from 'cheerio';
 
 import { z } from '@hono/zod-openapi';
 import { ChapterSchema } from '@/schemas';
+import { encodeUri } from '@/util';
 
 import { BASE_URL, USER_AGENT } from '../util/constants';
 
@@ -37,7 +38,7 @@ export const getChapters = async (slug: string): Promise<Array<Chapter>> => {
 		const dateValue = $!(element).find('time.text-datetime').attr('datetime') || '';
 
 		const chapter: Chapter = {
-			slug: `chapters/${chapterSlug}`,
+			slug: encodeUri(`chapters/${chapterSlug}`),
 			title: chapterTitle,
 			number: chapterNumber,
 			scanlator: 'weebcentral',

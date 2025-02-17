@@ -5,6 +5,7 @@ import { OpenAPIHono, z } from '@hono/zod-openapi';
 
 import { route } from '@/templates';
 import { EntrySchema } from '@/schemas';
+import { encodeUri } from '@/util';
 
 import { BASE_URL, USER_AGENT } from '../util/constants';
 import { isPageGreaterThanLast } from '../helpers/parser';
@@ -44,7 +45,7 @@ endpoint.openapi(route, async (c) => {
 			const slug = href ? href.split('/').pop()! : '';
 
 			results.push({
-				slug,
+				slug: encodeUri(slug),
 				title,
 				cover
 			});
