@@ -9,14 +9,13 @@ import { BASE_URL, USER_AGENT } from '../util/constants';
 type Chapter = z.infer<typeof ChapterSchema>;
 
 export const getChapters = async (slug: string): Promise<Array<Chapter>> => {
-	const endpoint = `${BASE_URL}/series/${slug}/full-chapter-list`;
+	const endpoint = `${BASE_URL}/${slug}/full-chapter-list`;
 
 	const { data: html } = await axios.get(endpoint, { headers: { 'User-Agent': USER_AGENT } });
 	const $ = load(html);
 
 	const prefix = 'Chapter ';
 	const chapters: Array<Chapter> = [];
-
 	$('div.flex.items-center').each((_, element) => {
 		const chapterTitle = $!(element).find('span[class=""]').first().text().trim();
 

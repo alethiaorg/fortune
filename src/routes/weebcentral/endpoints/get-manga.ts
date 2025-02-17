@@ -19,7 +19,7 @@ endpoint.openapi(route, async (c) => {
 		// Use slug from request params to fetch manga details (if needed)
 		const { slug } = c.req.param();
 
-		const url = `${BASE_URL}/series/${slug}`;
+		const url = `${BASE_URL}/${slug}`;
 
 		const { data: html } = await axios.get(url, {
 			headers: { 'User-Agent': USER_AGENT }
