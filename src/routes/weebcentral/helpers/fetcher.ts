@@ -22,8 +22,6 @@ export const getChapters = async (slug: string): Promise<Array<Chapter>> => {
 
 		const chapterNumber = parseInt(chapterTitle.slice(prefix.length), 10);
 
-		console.log('Chapter Title: ', chapterTitle);
-		console.log('Chapter Number: ', chapterNumber);
 		if (isNaN(chapterNumber)) {
 			throw new Error('Chapter number is not parsable.');
 		}

@@ -4,45 +4,39 @@ import { APIRoute } from '@/types';
 import { RouteSchema } from '@/schemas';
 import { source as route } from '@/templates';
 
-// import { default as search } from './endpoints/get-search';
+import { default as search } from './endpoints/get-search';
 import { default as manga } from './endpoints/get-manga';
 import { default as chapters } from './endpoints/get-chapters';
 import { default as chapter } from './endpoints/get-chapter-contents';
 
-// import { default as top } from './endpoints/get-top';
-// import { default as popular } from './endpoints/get-popular';
-// import { default as rising } from './endpoints/get-rising';
-// import { default as recent } from './endpoints/get-recent';
-// import { default as recentlyAdded } from './endpoints/get-new';
+import { default as top } from './endpoints/get-top';
+import { default as popular } from './endpoints/get-popular';
+import { default as recent } from './endpoints/get-recent';
+import { default as recentlyAdded } from './endpoints/get-new';
 
 const source = new OpenAPIHono();
 
 const routes: Array<APIRoute> = [
-	// {
-	// 	name: 'Top Rated',
-	// 	path: '/top',
-	// 	handler: top
-	// },
-	// {
-	// 	name: 'Most Popular',
-	// 	path: '/popular',
-	// 	handler: popular
-	// },
-	// {
-	// 	name: 'Rising',
-	// 	path: '/rising',
-	// 	handler: rising
-	// },
-	// {
-	// 	name: 'Recently Updated',
-	// 	path: '/recent',
-	// 	handler: recent
-	// },
-	// {
-	// 	name: 'Recently Added',
-	// 	path: '/new',
-	// 	handler: recentlyAdded
-	// }
+	{
+		name: 'Top Rated',
+		path: '/top',
+		handler: top
+	},
+	{
+		name: 'Most Popular',
+		path: '/popular',
+		handler: popular
+	},
+	{
+		name: 'Recently Updated',
+		path: '/recent',
+		handler: recent
+	},
+	{
+		name: 'Recently Added',
+		path: '/new',
+		handler: recentlyAdded
+	}
 ];
 
 source.openapi(route, (c) => {
@@ -64,7 +58,7 @@ source.openapi(route, (c) => {
 	}
 });
 
-// source.route('/search', search);
+source.route('/search', search);
 source.route('/manga', manga);
 source.route('/chapters', chapters);
 source.route('/chapter', chapter);
