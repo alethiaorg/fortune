@@ -13,7 +13,7 @@ endpoint.openapi(route, async (c) => {
 	try {
 		const { slug } = c.req.param();
 
-		const url = `${BASE_URL}/chapters/${slug}/images?is_prev=False&current_page=1&reading_style=long_strip`;
+		const url = `${BASE_URL}/${slug}/images?is_prev=False&current_page=1&reading_style=long_strip`;
 
 		const { data: html } = await axios.get(url, {
 			headers: {
@@ -22,13 +22,10 @@ endpoint.openapi(route, async (c) => {
 		});
 
 		const $ = load(html);
-
 		const contents: Array<string> = [];
 
 		$('section.flex-1.flex.flex-col.pb-4.cursor-pointer img').each((_, element) => {
 			const imageUrl = $(element).attr('src');
-
-			console.log(imageUrl);
 
 			if (imageUrl) {
 				contents.push(imageUrl);
