@@ -15,12 +15,16 @@ export const getChapters = async (slug: string): Promise<Array<Chapter>> => {
 	const { data: html } = await axios.get(endpoint, { headers: { 'User-Agent': USER_AGENT } });
 	const $ = load(html);
 
-	const prefix = 'Chapter ';
 	const chapters: Array<Chapter> = [];
 	$('div.flex.items-center').each((_, element) => {
-		const chapterTitle = $!(element).find('span[class=""]').first().text().trim();
+		const chapterTitle = $(element).find('span[class=""]').first().text().trim();
+		const parts = chapterTitle.split(' ');
 
-		const chapterNumber = parseInt(chapterTitle.slice(prefix.length), 10);
+		if (parts.length < 2) {
+			throw new Error('Chapter title does not contain a chapter number.');
+		}
+
+		const chapterNumber = parseInt(parts[1], 10);
 
 		if (isNaN(chapterNumber)) {
 			throw new Error('Chapter number is not parsable.');
