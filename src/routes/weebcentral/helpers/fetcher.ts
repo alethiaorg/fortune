@@ -18,13 +18,16 @@ export const getChapters = async (slug: string): Promise<Array<Chapter>> => {
 	const chapters: Array<Chapter> = [];
 	$('div.flex.items-center').each((_, element) => {
 		const chapterTitle = $(element).find('span[class=""]').first().text().trim();
-		const parts = chapterTitle.split(' ');
+		console.log('Chapter Title: ', chapterTitle);
 
-		if (parts.length < 2) {
-			throw new Error('Chapter title does not contain a chapter number.');
+		const match = chapterTitle.match(/\b\d+\b/);
+
+		if (!match) {
+			throw new Error('No standalone chapter number found.');
 		}
 
-		const chapterNumber = parseInt(parts[1], 10);
+		const chapterNumber = parseInt(match[0], 10);
+		console.log('Chapter Number: ', chapterNumber);
 
 		if (isNaN(chapterNumber)) {
 			throw new Error('Chapter number is not parsable.');

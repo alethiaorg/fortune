@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://manganato.com';
+export const BASE_URL = 'https://chapmanganato.to';
 
 export const BASE_MANGA_URL = 'https://chapmanganato.to';
 
