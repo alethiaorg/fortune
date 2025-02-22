@@ -9,6 +9,7 @@ import { default as ExampleSource } from '@/routes/example';
 import { default as MangaDexSource } from '@/routes/mangadex';
 import { default as ManganatoSource } from '@/routes/manganato';
 import { default as WeebCentralSource } from '@/routes/weebcentral';
+import { default as BatotoSource } from '@/routes/batoto';
 
 type Source = z.infer<typeof SourceSchema>;
 type APISource = Source & { handler: OpenAPIHono };
@@ -38,6 +39,12 @@ const sources: Array<APISource> = [
 		path: '/weebcentral',
 		handler: WeebCentralSource
 	}
+	// {
+	// 	name: 'Bato.to',
+	// 	icon: 'batoto.png',
+	// 	path: '/batoto',
+	// 	handler: BatotoSource
+	// }
 ];
 
 const app = new OpenAPIHono();
