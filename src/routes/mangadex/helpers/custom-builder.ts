@@ -12,6 +12,10 @@ import { MangaDexResponse } from '../util/types';
 const customBuilder = (params: any) => {
 	const endpoint = new OpenAPIHono();
 
+	console.log(
+		new Date(new Date().setMonth(new Date().getMonth() - 1)).toISOString().slice(0, 19).toString()
+	);
+
 	endpoint.openapi(route, async (c) => {
 		let { count, page } = c.req.query();
 
@@ -29,7 +33,7 @@ const customBuilder = (params: any) => {
 
 					availableTranslatedLanguage: ['en'],
 					publicationDemographic: ['shounen', 'shoujo', 'josei', 'seinen', 'none'],
-					contentRating: ['safe', 'suggestive', 'erotica', 'pornographic'],
+					contentRating: ['safe', 'suggestive', 'erotica'],
 					status: ['ongoing', 'completed', 'hiatus', 'cancelled'],
 					includes: ['manga', 'cover_art'],
 
