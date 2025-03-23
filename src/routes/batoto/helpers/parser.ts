@@ -11,7 +11,7 @@ type Origin = z.infer<typeof OriginSchema>;
 type Chapter = z.infer<typeof ChapterSchema>;
 
 export const getMangaMetadata = ($: CheerioAPI): Manga => {
-  const title = $('h3.text-lg.md\\:text-2xl.font-bold a.link.link-hover').text().trim();
+  const title = $('h3.text-lg.md\\:text-2xl.font-bold a.link.link-hover').first().text().trim();
 
   const authors: Array<string> = [];
 
