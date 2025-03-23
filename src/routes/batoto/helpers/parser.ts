@@ -102,7 +102,7 @@ export const getOriginMetadata = ($: CheerioAPI, slug: string, chapters: Array<C
 
   return {
     slug: encodeUri(slug),
-    url: `${BASE_URL}/series/${slug}`,
+    url: `${BASE_URL}/title/${slug}`,
     referer: REFERER,
     covers: [cover],
     status: status as 'Unknown' | 'Ongoing' | 'Completed' | 'Cancelled' | 'Hiatus',
