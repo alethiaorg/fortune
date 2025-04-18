@@ -17,7 +17,7 @@ endpoint.openapi(route, async (c) => {
 		const _page = parseInt(page);
 
 		// return early
-		if (page > 0) {
+		if (_page > 0) {
 			return c.json([], 200)
 		}
 		
