@@ -6,6 +6,7 @@ import { HostSchema, SourceSchema } from './schemas';
 import { host as route } from './templates';
 
 import { default as BatotoSource } from '@/routes/batoto';
+import { default as ComicKSource } from '@/routes/comick';
 import { default as ExampleSource } from '@/routes/example';
 import { default as MangaDexSource } from '@/routes/mangadex';
 import { default as ManganatoSource } from '@/routes/manganato';
@@ -46,6 +47,12 @@ const sources: Array<APISource> = [
     icon: 'batoto.png',
     path: '/batoto',
     handler: BatotoSource
+  },
+  {
+    name: 'ComicK',
+    icon: 'comick.png',
+    path: '/comick',
+    handler: ComicKSource
   }
 ];
 
