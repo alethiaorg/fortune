@@ -4,7 +4,7 @@ import { Cheerio, load } from 'cheerio';
 
 import { chapterContents as route } from '@/templates';
 import { decodeUri } from '@/util';
-import { BASE_URL, USER_AGENT } from '../utils/constants';
+import { BASE_URL, USER_AGENT } from '../util/constants';
 
 const endpoint = new OpenAPIHono();
 

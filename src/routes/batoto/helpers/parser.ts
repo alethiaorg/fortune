@@ -4,7 +4,7 @@ import { z } from '@hono/zod-openapi';
 
 import { ChapterSchema, MangaSchema, OriginSchema } from '@/schemas';
 import { encodeUri } from '@/util';
-import { BASE_URL, REFERER } from '../utils/constants';
+import { BASE_URL, REFERER } from '../util/constants';
 
 type Manga = z.infer<typeof MangaSchema>;
 type Origin = z.infer<typeof OriginSchema>;

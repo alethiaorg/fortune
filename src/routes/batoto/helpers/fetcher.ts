@@ -3,7 +3,7 @@ import { encodeUri } from '@/util';
 import { z } from '@hono/zod-openapi';
 import axios from 'axios';
 import { load } from 'cheerio';
-import { BASE_URL, USER_AGENT } from '../utils/constants';
+import { BASE_URL, USER_AGENT } from '../util/constants';
 
 type Chapter = z.infer<typeof ChapterSchema>;
 

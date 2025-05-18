@@ -20,43 +20,55 @@ const sources: Array<APISource> = [
     name: 'Example',
     icon: 'example.png',
     path: '/example',
-    handler: ExampleSource
+    handler: ExampleSource,
+    website: 'https://example.com',
+    description: 'Example source for testing purposes'
   },
   {
     name: 'MangaDex',
     icon: 'mangadex.png',
     path: '/mangadex',
-    handler: MangaDexSource
+    handler: MangaDexSource,
+    website: 'https://mangadex.org',
+    description: 'Read manga online for free on MangaDex with no ads, high quality images and support scanlation groups!'
   },
   // Disabled
 
   // {
-  // 	name: 'Manganato',
-  // 	icon: 'manganato.png',
-  // 	path: '/manganato',
-  // 	handler: ManganatoSource
+  //   name: 'Manganato',
+  //   icon: 'manganato.png',
+  //   path: '/manganato',
+  //   handler: ManganatoSource
   // },
   {
     name: 'WeebCentral',
     icon: 'weebcentral.png',
     path: '/weebcentral',
-    handler: WeebCentralSource
+    handler: WeebCentralSource,
+    website: 'https://weebcentral.com',
+    description: 'Explore Weeb Central for top manga titles, hidden gems, and the latest releases. Join our community of manga enthusiasts!'
   },
   {
     name: 'Bato.to',
     icon: 'batoto.png',
     path: '/batoto',
-    handler: BatotoSource
+    handler: BatotoSource,
+    website: 'https://bato.to',
+    description: 'A manga reader for manga fans.'
   },
   {
     name: 'ComicK',
     icon: 'comick.png',
     path: '/comick',
-    handler: ComicKSource
+    handler: ComicKSource,
+    website: 'https://comick.io',
+    description: 'Beautiful free reader and a Big database for comics (manhwa, manhua, manga).'
   }
 ];
 
 const app = new OpenAPIHono();
+
+app.get('/ping', (c) => c.text('healthy'));
 
 app.get(
   '/static/*',
@@ -70,11 +82,15 @@ app.openapi(route, (c) => {
   const items: Array<Source> = sources.map((item) => ({
     name: item.name,
     icon: item.icon,
-    path: item.path
+    path: item.path,
+    website: item.website,
+    description: item.description
   }));
 
   const host = {
     name: 'Fortune',
+    author: 'Alethia',
+    website: 'https://github.com/alethiaorg/fortune',
     sources: items
   };
 

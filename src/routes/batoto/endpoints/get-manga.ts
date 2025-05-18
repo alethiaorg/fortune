@@ -8,7 +8,7 @@ import { detail as route } from '@/templates';
 
 import { getChapters } from '../helpers/fetcher';
 import { getMangaMetadata, getOriginMetadata } from '../helpers/parser';
-import { BASE_URL, USER_AGENT } from '../utils/constants';
+import { BASE_URL, USER_AGENT } from '../util/constants';
 
 type Detail = z.infer<typeof DetailSchema>;
 

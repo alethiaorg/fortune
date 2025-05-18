@@ -8,6 +8,7 @@ import { default as chapter } from './endpoints/get-chapter-contents';
 import { default as chapters } from './endpoints/get-chapters';
 import { default as manga } from './endpoints/get-manga';
 import { default as search } from './endpoints/get-search';
+import { default as ping } from './endpoints/ping';
 
 import { default as recentlyAdded } from './endpoints/get-new';
 import { default as popular } from './endpoints/get-popular';
@@ -58,6 +59,7 @@ source.openapi(route, (c) => {
   }
 });
 
+source.route('/ping', ping);
 source.route('/search', search);
 source.route('/manga', manga);
 source.route('/chapters', chapters);

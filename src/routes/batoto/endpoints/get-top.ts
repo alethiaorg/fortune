@@ -7,7 +7,7 @@ import { EntrySchema } from '@/schemas';
 import { route } from '@/templates';
 import { encodeUri } from '@/util';
 
-import { BASE_URL, USER_AGENT } from '../utils/constants';
+import { BASE_URL, USER_AGENT } from '../util/constants';
 
 type Entry = z.infer<typeof EntrySchema>;
 
