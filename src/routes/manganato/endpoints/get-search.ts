@@ -17,7 +17,7 @@ const endpoint = new OpenAPIHono();
 endpoint.openapi(route, async (c) => {
 	let { query, page } = c.req.query();
 
-	page = page && page !== 'null' ? page : '0';
+	page = page && page !== 'null' ? page : '1';
 
 	try {
 		const _page = parseInt(page);

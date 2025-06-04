@@ -17,15 +17,16 @@ endpoint.openapi(route, async (c) => {
 	let { count, page } = c.req.query();
 
 	count = count && count !== 'null' ? count : '32';
-	page = page && page !== 'null' ? page : '0';
+	page = page && page !== 'null' ? page : '1';
 
 	try {
 		const _count = parseInt(count);
-		const _page = parseInt(page);
+		// Ensure page is at least 0
+		// using offset-based counting hence -1
+		const _page = Math.max(0, parseInt(page) - 1);
 
-		const url = `${BASE_URL}/search/data?limit=${_count}&offset=${
-			_count * _page
-		}&sort=Subscribers&order=Descending&official=Any&anime=Any&adult=Any&display_mode=Full+Display`;
+		const url = `${BASE_URL}/search/data?limit=${_count}&offset=${_count * _page
+			}&sort=Subscribers&order=Descending&official=Any&anime=Any&adult=Any&display_mode=Full+Display`;
 
 		const { data: html } = await axios.get(url, {
 			headers: { 'User-Agent': USER_AGENT }

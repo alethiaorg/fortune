@@ -21,7 +21,9 @@ endpoint.openapi(route, async (c) => {
 
 	try {
 		const _count = parseInt(count);
-		const _page = parseInt(page);
+		// Ensure page is at least 0
+		// using offset-based counting hence -1
+		const _page = Math.max(0, parseInt(page) - 1); 
 
 		const url = `${BASE_URL}/search/data?limit=${_count}&offset=${
 			_count * _page

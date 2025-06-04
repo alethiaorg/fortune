@@ -7,18 +7,17 @@ import { route } from '@/templates';
 
 import { toListManga } from '../helpers/parser';
 import { BASE_URL, USER_AGENT, VERSION } from '../util/constants';
+import { SearchResultItem } from '../util/types';
 
 const endpoint = new OpenAPIHono();
 
 endpoint.openapi(route, async (c) => {
-  let { count, page, query } = c.req.query();
+  let { page, query } = c.req.query();
 
-  count = count && count !== 'null' ? count : '60';
-  page = page && page !== 'null' ? page : '0';
+  page = page && page !== 'null' ? page : '1';
 
   try {
-    const _count = parseInt(count);
-    const _page = Math.max(1, parseInt(page)); // Ensure page is atleast 1
+    const _page = Math.max(1, parseInt(page));
 
     const response = await axios.get(`${BASE_URL}/v${VERSION}/search`, {
       params: {

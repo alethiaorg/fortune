@@ -14,11 +14,13 @@ endpoint.openapi(route, async (c) => {
   let { count, page } = c.req.query();
 
   count = count && count !== 'null' ? count : '60';
-  page = page && page !== 'null' ? page : '0';
+  page = page && page !== 'null' ? page : '1';
 
   try {
     const _count = parseInt(count);
-    const _page = parseInt(page);
+    // Ensure page is at least 0
+    // MangaDex uses 0-based indexing for pagination hence -1
+    const _page = Math.max(0, parseInt(page) - 1); 
 
     const response = await axios.get(`${BASE_URL}/manga`, {
       params: {

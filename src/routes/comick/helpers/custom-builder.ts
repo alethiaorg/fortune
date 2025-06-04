@@ -13,13 +13,11 @@ const customBuilder = (params: any) => {
   const endpoint = new OpenAPIHono();
 
   endpoint.openapi(route, async (c) => {
-    let { count, page } = c.req.query();
+    let { page } = c.req.query();
 
-    count = count && count !== 'null' ? count : '60';
-    page = page && page !== 'null' ? page : '0';
+    page = page && page !== 'null' ? page : '1';
 
     try {
-      const _count = parseInt(count);
       const _page = Math.max(1, parseInt(page)); // Ensure page is atleast 1
 
       const response = await axios.get(`${BASE_URL}/v${VERSION}/search`, {

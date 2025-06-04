@@ -11,7 +11,7 @@ endpoint.openapi(route, async (c) => {
 	let { query, count, page } = c.req.query();
 
 	count = count && count !== 'null' ? count : '60';
-	page = page && page !== 'null' ? page : '0';
+	page = page && page !== 'null' ? page : '1';
 
 	try {
 		const _count = parseInt(count);

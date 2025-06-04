@@ -9,7 +9,7 @@ const endpoint = new OpenAPIHono();
 
 endpoint.openapi(route, async (c) => {
 	// Fetching based on current page
-	const { count = '60', page = '0' } = c.req.query();
+	const { count = '60', page = '1' } = c.req.query();
 
 	try {
 		// values from query are always strings so need to parse as ints

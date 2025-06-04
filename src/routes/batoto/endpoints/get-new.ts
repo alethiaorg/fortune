@@ -16,11 +16,10 @@ const endpoint = new OpenAPIHono();
 endpoint.openapi(route, async (c) => {
   let { page } = c.req.query();
 
-  page = page && page !== 'null' ? page : '0';
+  page = page && page !== 'null' ? page : '1';
 
   try {
-    // Page + 1 because its 0 indexed
-    const _page = Number.parseInt(page) + 1;
+    const _page = Number.parseInt(page);
 
     const url = `${BASE_URL}/v3x-search?orig=&lang=en&sort=field_public&page=${_page}`;
 
