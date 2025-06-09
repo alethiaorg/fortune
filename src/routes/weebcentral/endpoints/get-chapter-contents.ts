@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { load } from 'cheerio';
 
 import { OpenAPIHono, z } from '@hono/zod-openapi';
@@ -6,6 +5,7 @@ import { OpenAPIHono, z } from '@hono/zod-openapi';
 import { chapterContents as route } from '@/templates';
 
 import { BASE_URL, USER_AGENT } from '../util/constants';
+import { fetchWithFallback } from '@/util/flaresolverr';
 
 const endpoint = new OpenAPIHono();
 
@@ -15,11 +15,8 @@ endpoint.openapi(route, async (c) => {
 
 		const url = `${BASE_URL}/${slug}/images?is_prev=False&current_page=1&reading_style=long_strip`;
 
-		const { data: html } = await axios.get(url, {
-			headers: {
-				'User-Agent': USER_AGENT
-			}
-		});
+		// Use FlareSolverr with fallback
+		const html = await fetchWithFallback(url, USER_AGENT, c);
 
 		const $ = load(html);
 		const contents: Array<string> = [];
@@ -37,7 +34,7 @@ endpoint.openapi(route, async (c) => {
 		return c.json(contents, 200);
 	} catch (error: any) {
 		// Handle Network Errors
-		if (axios.isAxiosError(error) && error.response?.status === 404) {
+		if (error.message?.includes('404') || (error.response && error.response.status === 404)) {
 			return c.json({ code: 404, message: 'Network error' }, 404);
 		}
 

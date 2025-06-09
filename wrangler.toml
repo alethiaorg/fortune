@@ -7,6 +7,11 @@ assets = { directory = "public" }
 
 workers_dev = true
 
+# Default environment variables (development)
+[vars]
+USE_FLARESOLVERR = "false"
+FLARESOLVERR_URL = "http://localhost:8191/v1"
+
 [env.staging]
 vars = { ENVIRONMENT = "staging" }
 
